@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base ::layout(~{::section})}">
+
+<head>
+    <title>Category Management</title>
+
+    <!-- Bootstrap + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<section class="category-bg min-vh-100 py-5">
+
+    <div class="container">
+
+        <div class="row g-4">
+
+            <!-- 🔥 ADD CATEGORY CARD -->
+            <div class="col-md-4">
+                <div class="card glass-card p-4 shadow-lg">
+
+                    <div class="text-center mb-3">
+                        <i class="fa-solid fa-layer-group fa-3x text-primary"></i>
+                        <h4 class="fw-bold mt-2">Add Category</h4>
+                    </div>
+
+                    <!-- Alerts -->
+                    <div th:if="${SuccessMsg}" class="alert alert-success text-center">
+                        [[${SuccessMsg}]]
+                    </div>
+
+                    <div th:if="${ErrorMsg}" class="alert alert-danger text-center">
+                        [[${ErrorMsg}]]
+                    </div>
+
+                    <form action="/admin/saveCategory" method="post" enctype="multipart/form-data">
+
+                        <div class="mb-3">
+                            <label class="fw-semibold">Category Name</label>
+                            <input type="text" class="form-control custom-input" name="name" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="fw-semibold">Status</label>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="isActive" value="true" checked>
+                                <label class="form-check-label">Active</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="isActive" value="false">
+                                <label class="form-check-label">Inactive</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="fw-semibold">Upload Image</label>
+                            <input type="file" class="form-control custom-input" name="file">
+                        </div>
+
+                        <button class="btn btn-gradient w-100 mt-2">
+                            <i class="fa-solid fa-floppy-disk"></i> Save Category
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+
+            <!-- 🔥 CATEGORY TABLE -->
+            <div class="col-md-8">
+                <div class="card glass-card shadow-lg">
+
+                    <div class="card-header text-center fs-4 fw-bold">
+                        Category Details
+                    </div>
+
+                    <div class="card-body table-responsive">
+
+                        <table class="table table-hover align-middle text-center">
+
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                    <th>Image</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr th:each="cat,c:${categories}">
+                                    <td>[[${c.count}]]</td>
+                                    <td class="fw-semibold">[[${cat.name}]]</td>
+
+                                    <td>
+                                        <span th:if="${cat.isActive}" class="badge bg-success">Active</span>
+                                        <span th:if="${!cat.isActive}" class="badge bg-danger">Inactive</span>
+                                    </td>
+
+                                    <td>
+                                        <img th:src="@{'/uploads/category_img/' + ${cat.imageName}}"
+                                             class="rounded shadow-sm"
+                                             style="width:60px;height:60px;object-fit:cover;">
+                                    </td>
+
+                                    <td>
+                                        <a th:href="@{/admin/loadEditCategory/{id}(id=${cat.id})}"
+                                           class="btn btn-sm btn-outline-primary me-2">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+
+                                        <a th:href="@{/admin/deleteCategory/{id}(id=${cat.id})}"
+                                           class="btn btn-sm btn-outline-danger">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+	
+	<!-- 🔥 CUSTOM CSS -->
+	<style>
+
+	.category-bg {
+	    background: linear-gradient(135deg, #eef2f3, #dfe9f3);
+	}
+
+	.glass-card {
+	    border-radius: 20px;
+	    background: rgba(255, 255, 255, 0.85);
+	    backdrop-filter: blur(10px);
+	    border: none;
+	    transition: 0.3s;
+	}
+
+	.glass-card:hover {
+	    transform: translateY(-6px);
+	}
+
+	.custom-input {
+	    border-radius: 10px;
+	    padding: 10px;
+	}
+
+	.custom-input:focus {
+	    border-color: #0d6efd;
+	    box-shadow: 0 0 6px rgba(13, 110, 253, 0.3);
+	}
+
+	.btn-gradient {
+	    background: linear-gradient(135deg, #0d6efd, #4dabf7);
+	    color: white;
+	    border: none;
+	    border-radius: 10px;
+	    padding: 10px;
+	    font-weight: 600;
+	    transition: 0.3s;
+	}
+
+	.btn-gradient:hover {
+	    background: linear-gradient(135deg, #0b5ed7, #339af0);
+	}
+
+	table tbody tr:hover {
+	    background-color: #f1f5ff;
+	}
+
+	</style>
+
+
+</section>
+
+
+</body>
+</html>

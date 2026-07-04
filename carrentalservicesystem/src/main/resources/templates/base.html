@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout(content)"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Car Rental</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
+
+</head>
+
+<body>
+	
+	<style>
+
+	/* FOOTER BACKGROUND */
+	.footer {
+	    background: linear-gradient(135deg, #141e30, #243b55);
+	    color: #fff;
+	}
+
+	/* LINKS */
+	.footer-links li {
+	    margin-bottom: 8px;
+	}
+
+	.footer-links a {
+	    color: #ccc;
+	    text-decoration: none;
+	    transition: 0.3s;
+	}
+
+	.footer-links a:hover {
+	    color: #fff;
+	    padding-left: 5px;
+	}
+
+	/* SOCIAL ICONS */
+	.social-icons a {
+	    display: inline-block;
+	    margin-right: 10px;
+	    color: #ccc;
+	    font-size: 18px;
+	    transition: 0.3s;
+	}
+
+	.social-icons a:hover {
+	    color: #fff;
+	    transform: translateY(-3px);
+	}
+
+	/* RESPONSIVE */
+	@media (max-width: 768px) {
+	    .footer {
+	        text-align: center;
+	    }
+	}
+
+
+	        body {
+	            background: #f5f7fa;
+	            font-family: 'Segoe UI', sans-serif;
+	        }
+
+	        /* NAVBAR */
+	        .navbar {
+	            backdrop-filter: blur(10px);
+	            background: rgba(255, 255, 255, 0.7) !important;
+	            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+	        }
+
+	        .navbar-brand {
+	            font-weight: bold;
+	            font-size: 1.4rem;
+	            color: #0d6efd !important;
+	        }
+
+	        .nav-link {
+	            font-weight: 500;
+	            transition: 0.3s;
+	        }
+
+	        .nav-link:hover {
+	            color: #0d6efd !important;
+	            transform: translateY(-2px);
+	        }
+
+	        /* DROPDOWN */
+	        .dropdown-menu {
+	            border-radius: 10px;
+	            border: none;
+	            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+	        }
+
+	        /* CONTENT SPACING (important for fixed navbar) */
+	        .main-content {
+	            margin-top: 90px;
+	            padding: 20px;
+	        }
+
+	        /* FOOTER */
+	        footer {
+	            background: linear-gradient(135deg, #1f1f1f, #343a40);
+	        }
+
+	        footer h5 {
+	            color: #ffffff;
+	        }
+
+	        footer p, footer a {
+	            color: #ccc;
+	            font-size: 14px;
+	        }
+
+	        footer a:hover {
+	            color: #0d6efd;
+	            text-decoration: underline;
+	        }
+
+	        /* USER BADGE */
+	        .user-badge {
+	            background: #0d6efd;
+	            color: white;
+	            padding: 5px 10px;
+	            border-radius: 20px;
+	            font-size: 12px;
+	        }
+
+	</style>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" href="/">
+            <i class="fa-solid fa-car"></i> CarRentals
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <!-- LEFT -->
+            <ul class="navbar-nav me-auto">
+
+				<th:block sec:authorize="hasRole('USER')">
+				    <li class="nav-item">
+				        <a class="nav-link" th:href="@{/user/home}">
+				            <i class="fa-solid fa-house"></i> Home
+				        </a>
+				    </li>
+				</th:block>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/cars">
+                        <i class="fa-solid fa-car"></i> Cars
+                    </a>
+                </li>
+
+                <!-- CATEGORY -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        Categories
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li th:each="cat : ${categories}">
+                            <a class="dropdown-item"
+                               th:text="${cat.name}"
+                               th:href="@{'/cars?category=' + ${cat.name}}">
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+
+            <!-- RIGHT -->
+            <ul class="navbar-nav ms-auto">
+
+                <!-- NOT LOGGED -->
+                <th:block sec:authorize="isAnonymous()">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signin">Login</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+
+                </th:block>
+
+				<!-- LOGGED IN -->
+				<th:block sec:authorize="isAuthenticated()">
+
+				    <!-- ADMIN BUTTON -->
+					<th:block sec:authorize="hasRole('ADMIN')">
+					    <li class="nav-item">
+					        <a class="nav-link text-warning fw-bold" href="/admin/">
+					            <i class="fa-solid fa-user-shield"></i> Admin Panel
+					        </a>
+					    </li>
+					</th:block>
+
+				    <li class="nav-item dropdown">
+				        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+
+				            <i class="fa-solid fa-user"></i>
+				            <span th:text="${#authentication.name}"></span>
+
+				        </a>
+
+				        <ul class="dropdown-menu">
+				            <li><a class="dropdown-item" href="#">Profile</a></li>
+				        </ul>
+				    </li>
+
+				    <li class="nav-item">
+				        <a class="nav-link text-danger" href="/logout">
+				            Logout
+				        </a>
+				    </li>
+
+				</th:block>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+    <div th:replace="${content}"></div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer mt-5 pt-5 pb-3">
+
+    <div class="container">
+
+        <div class="row">
+
+            <!-- ABOUT -->
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold text-white">
+                    🚗 Car Rental System
+                </h5>
+                <p class="text-light small">
+                    Reliable and affordable car rental services.
+                    Experience comfort, safety, and convenience with us.
+                </p>
+
+                <!-- SOCIAL ICONS -->
+                <div class="social-icons mt-3">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <!-- QUICK LINKS -->
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold text-white">Quick Links</h5>
+                <ul class="list-unstyled footer-links">
+                    <li><a href="/">🏠 Home</a></li>
+                    <li><a href="/cars">🚘 Cars</a></li>
+                    <li><a href="/signin">🔐 Login</a></li>
+                    <li><a href="/register">📝 Register</a></li>
+                </ul>
+            </div>
+
+            <!-- CONTACT -->
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold text-white">Contact</h5>
+
+                <p class="text-light small mb-1">
+                    <i class="fa-solid fa-location-dot"></i> Ahmedabad, India
+                </p>
+
+                <p class="text-light small mb-1">
+                    <i class="fa-solid fa-phone"></i> +91 98765 43210
+                </p>
+
+                <p class="text-light small">
+                    <i class="fa-solid fa-envelope"></i> support@carrental.com
+                </p>
+            </div>
+
+        </div>
+
+        <hr class="border-secondary">
+
+        <!-- COPYRIGHT -->
+        <div class="text-center text-light small">
+            © 2026 Car Rental System | Designed & Developed PP SAVANI UNIVERSITY 🚀
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

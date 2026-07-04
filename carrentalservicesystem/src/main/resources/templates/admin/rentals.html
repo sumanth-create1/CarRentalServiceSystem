@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base :: layout(~{::section})}">
+
+<body>
+
+<section class="rental-bg min-vh-100 py-5">
+
+    <div class="container">
+
+        <!-- 🔥 HEADER SLIDER -->
+        <div id="rentalsHeaderSlider"
+             class="carousel slide carousel-fade shadow-lg rounded-4 mb-4 overflow-hidden"
+             data-bs-ride="carousel" data-bs-interval="2500">
+
+            <div class="carousel-inner">
+
+                <div class="carousel-item active">
+                    <div class="p-5 text-center text-white gradient-1">
+                        <h2 class="fw-bold">🚗 All Car Rentals</h2>
+                        <p>Manage all user bookings in one place</p>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="p-5 text-center text-white gradient-2">
+                        <h2 class="fw-bold">📋 Booking Management</h2>
+                        <p>Track and manage reservations easily</p>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="p-5 text-center text-white gradient-3">
+                        <h2 class="fw-bold">⚙️ Admin Control</h2>
+                        <p>Full control over your rental system</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 🔍 SEARCH BAR -->
+        <div class="card glass-card p-3 mb-4 shadow-sm">
+            <input type="text" id="searchInput" class="form-control"
+                   placeholder="🔍 Search by email, car or location...">
+        </div>
+
+        <!-- 📊 TABLE -->
+        <div class="card glass-card shadow-lg border-0 rounded-4">
+
+            <div class="card-header text-center fw-bold fs-5">
+                Booking Details
+            </div>
+
+            <div class="card-body p-0 table-responsive">
+
+                <table class="table table-hover align-middle mb-0" id="rentalTable">
+
+                    <thead class="table-dark text-center">
+                        <tr>
+                            <th>#</th>
+                            <th>User</th>
+                            <th>Car</th>
+                            <th>Location</th>
+                            <th>Pickup</th>
+                            <th>Return</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="text-center">
+
+                        <tr th:each="b, iter : ${bookings}">
+
+                            <td>
+                                <span class="badge bg-secondary" th:text="${iter.count}"></span>
+                            </td>
+
+                            <td>
+                                <i class="fa-solid fa-user text-primary"></i><br>
+                                <small th:text="${b.userEmail}"></small>
+                            </td>
+
+                            <td>
+                                <i class="fa-solid fa-car text-success"></i><br>
+                                <small th:text="${b.carName}"></small>
+                            </td>
+
+                            <td>
+                                <i class="fa-solid fa-location-dot text-danger"></i><br>
+                                <small th:text="${b.pickupLocation}"></small>
+                            </td>
+
+                            <td>
+                                <span class="badge bg-info text-dark"
+                                      th:text="${b.pickupDate}"></span>
+                            </td>
+
+                            <td>
+                                <span class="badge bg-warning text-dark"
+                                      th:text="${b.returnDate}"></span>
+                            </td>
+
+                            <!-- 🔥 STATUS (dynamic ready) -->
+                            <td>
+                                <span class="badge bg-success">Confirmed</span>
+                                <!-- future:
+                                <span th:if="${b.status=='PENDING'}" class="badge bg-warning">Pending</span>
+                                -->
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+	
+	<!-- 🔥 CSS -->
+	<style>
+
+	.rental-bg {
+	    background: linear-gradient(135deg, #eef2f3, #dfe9f3);
+	}
+
+	.glass-card {
+	    background: rgba(255, 255, 255, 0.9);
+	    border-radius: 20px;
+	    backdrop-filter: blur(10px);
+	    transition: 0.3s;
+	}
+
+	.glass-card:hover {
+	    transform: translateY(-5px);
+	}
+
+	/* Gradients */
+	.gradient-1 {
+	    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+	}
+	.gradient-2 {
+	    background: linear-gradient(135deg, #141e30, #243b55);
+	}
+	.gradient-3 {
+	    background: linear-gradient(135deg, #000000, #434343);
+	}
+
+	/* Hover row */
+	table tbody tr:hover {
+	    background-color: #f1f5ff;
+	}
+
+	/* Search input */
+	#searchInput {
+	    border-radius: 10px;
+	    padding: 10px;
+	}
+
+	</style>
+
+	<!-- 🔥 SEARCH SCRIPT -->
+	<script>
+	    const input = document.getElementById("searchInput");
+	    const table = document.getElementById("rentalTable");
+
+	    input.addEventListener("keyup", function () {
+	        const filter = input.value.toLowerCase();
+	        const rows = table.getElementsByTagName("tr");
+
+	        for (let i = 1; i < rows.length; i++) {
+	            let text = rows[i].innerText.toLowerCase();
+	            rows[i].style.display = text.includes(filter) ? "" : "none";
+	        }
+	    });
+	</script>
+
+</section>
+
+
+
+</body>
+</html>

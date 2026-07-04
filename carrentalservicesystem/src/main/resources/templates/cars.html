@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base ::layout(~{::section})}">
+
+<head>
+    <title>Cars</title>
+</head>
+
+<body>
+
+<section class="container-fluid mt-5">
+
+    <!-- 🔍 SEARCH -->
+    <div class="search-box mb-4">
+        <form action="/cars" method="get">
+            <div class="input-group shadow">
+                <input type="text" name="keyword" th:value="${keyword}"
+                       class="form-control"
+                       placeholder="Search cars...">
+
+                <button class="btn btn-primary">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="row">
+
+        <!-- 📂 SIDEBAR -->
+        <div class="col-lg-2 col-md-3 mb-4">
+
+            <div class="card shadow-sm category-box p-3">
+
+                <h5 class="text-center fw-bold mb-3">Categories</h5>
+
+                <a th:href="@{/cars}"
+                   class="list-group-item list-group-item-action"
+                   th:classappend="${selectedCategory == ''} ? 'active' : ''">
+                    All Cars
+                </a>
+
+                <a th:each="c:${categories}"
+                   th:href="@{/cars(category=${c.name})}"
+                   class="list-group-item list-group-item-action"
+                   th:classappend="${selectedCategory == c.name} ? 'active' : ''">
+                    [[${c.name}]]
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- 🚗 CAR LIST -->
+        <div class="col-lg-10 col-md-9">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="page-title">Available Cars</h3>
+                <span class="text-muted">[[${#lists.size(cars)}]] Results</span>
+            </div>
+
+            <!-- ❌ NO DATA -->
+            <div th:if="${#lists.isEmpty(cars)}" class="text-center p-5">
+                <h4 class="text-danger">No Cars Found</h4>
+                <p class="text-muted">Try another search or category</p>
+            </div>
+
+            <div class="row g-4">
+
+                <!-- CAR CARD -->
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6"
+                     th:each="c:${cars}">
+
+                    <div class="card car-card shadow-sm h-100">
+
+                        <!-- IMAGE -->
+                        <img th:src="@{'/images/cars/' + ${c.imageName}}"
+                             class="card-img-top p-3">
+
+                        <!-- BODY -->
+                        <div class="card-body text-center">
+
+                            <h6 class="fw-semibold">[[${c.title}]]</h6>
+
+                            <!-- PRICE -->
+                            <p class="mb-1">
+                                <span class="price-old">₹ [[${c.price}]]</span>
+                                <br>
+                                <span class="price-new text-primary">
+                                    ₹ [[${c.discountPrice}]] /day
+                                </span>
+                            </p>
+
+                            <!-- DISCOUNT -->
+                            <span class="badge bg-success mb-2">
+                                [[${c.discount}]]% OFF
+                            </span>
+
+                            <!-- BUTTON -->
+                            <a th:href="@{/car/{id}(id=${c.id})}"
+                               class="btn btn-outline-primary w-100 btn-sm">
+                                View Details
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+	<style>
+
+	        /* SEARCH BAR */
+	        .search-box {
+	            max-width: 600px;
+	            margin: auto;
+	        }
+
+	        .search-box input {
+	            border-radius: 50px 0 0 50px;
+	            padding: 12px;
+	        }
+
+	        .search-box button {
+	            border-radius: 0 50px 50px 0;
+	        }
+
+	        /* SIDEBAR */
+	        .category-box {
+	            border-radius: 15px;
+	        }
+
+	        .category-box .list-group-item {
+	            border: none;
+	            border-radius: 10px;
+	            margin-bottom: 5px;
+	            transition: 0.3s;
+	        }
+
+	        .category-box .list-group-item:hover {
+	            background: #0d6efd;
+	            color: white;
+	        }
+
+	        .category-box .active {
+	            background: #0d6efd !important;
+	            color: white;
+	        }
+
+	        /* CAR CARD */
+	        .car-card {
+	            border-radius: 15px;
+	            transition: 0.3s;
+	            overflow: hidden;
+	        }
+
+	        .car-card:hover {
+	            transform: translateY(-8px);
+	            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+	        }
+
+	        .car-card img {
+	            height: 160px;
+	            object-fit: contain;
+	        }
+
+	        /* PRICE */
+	        .price-old {
+	            text-decoration: line-through;
+	            color: gray;
+	            font-size: 13px;
+	        }
+
+	        .price-new {
+	            font-weight: bold;
+	            font-size: 16px;
+	        }
+
+	        /* HEADER */
+	        .page-title {
+	            font-weight: bold;
+	        }
+
+	    </style>
+</section>
+
+</body>
+</html>

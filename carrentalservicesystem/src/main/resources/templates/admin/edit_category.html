@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base ::layout(~{::section})}">
+
+<head>
+	<title>Register</title>
+
+
+</head>
+
+<body>
+	<section class="edit-category-section">
+		<div class="container">
+
+			<div class="row justify-content-center align-items-center min-vh-100">
+
+				<div class="col-md-5">
+
+					<div class="card shadow-lg border-0 rounded-4">
+
+						<!-- HEADER -->
+						<div class="card-header text-white text-center rounded-top-4 py-3"
+							style="background: linear-gradient(135deg, #0d6efd, #6f42c1);">
+							<h4 class="mb-0 fw-bold">✏️ Edit Category</h4>
+
+							<th:block th:if="${SuccessMsg}">
+								<p class="text-light fw-semibold mt-2">[[${SuccessMsg}]]</p>
+							</th:block>
+
+							<th:block th:if="${ErrorMsg}">
+								<p class="text-warning fw-semibold mt-2">[[${ErrorMsg}]]</p>
+							</th:block>
+						</div>
+
+						<!-- BODY -->
+						<div class="card-body p-4">
+
+							<form action="/admin/updateCategory" method="post" enctype="multipart/form-data">
+
+								<!-- ID -->
+								<input type="hidden" name="id" th:value="${category.id}">
+
+								<!-- CATEGORY NAME -->
+								<div class="mb-3">
+									<label class="form-label fw-semibold">Category Name</label>
+									<input type="text" class="form-control shadow-sm" name="name"
+										th:value="${category.name}" placeholder="Enter category name">
+								</div>
+
+								<!-- STATUS -->
+								<div class="mb-3">
+									<label class="form-label fw-semibold">Status</label>
+
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="isActive" value="true"
+											th:checked="${category.isActive==true}">
+										<label class="form-check-label">Active</label>
+									</div>
+
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="isActive" value="false"
+											th:checked="${category.isActive==false}">
+										<label class="form-check-label">Inactive</label>
+									</div>
+								</div>
+
+								<!-- IMAGE UPLOAD -->
+								<div class="mb-3">
+									<label class="form-label fw-semibold">Upload Image</label>
+									<input type="file" class="form-control shadow-sm" name="file">
+								</div>
+
+								<!-- IMAGE PREVIEW -->
+								<div class="text-center mb-3">
+									<img th:src="@{'/uploads/category_img/' + ${category.imageName}}"
+										class="rounded-3 shadow-sm border"
+										style="width:120px; height:120px; object-fit:cover;">
+								</div>
+
+								<!-- BUTTON -->
+								<button type="submit" class="btn btn-primary w-100 py-2 fw-bold rounded-3 shadow-sm">
+									Update Category
+								</button>
+
+							</form>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+		
+<style>
+	.edit-category-section {
+	    background: #f4f6f9;
+	}
+
+	.card {
+	    transition: 0.3s ease-in-out;
+	}
+
+	.card:hover {
+	    transform: translateY(-5px);
+	    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+	}
+
+	.form-control:focus {
+	    border-color: #6f42c1;
+	    box-shadow: 0 0 0 0.2rem rgba(111,66,193,0.25);
+	}
+</style>>
+	</section>
+
+</body>
+
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: layout(~{::section})}">
+
+<section>
+
+	<!-- 🌌 BACKGROUND -->
+	<div class="bg-hero"></div>
+	<div class="overlay"></div>
+
+	<div class="container d-flex justify-content-center align-items-center min-vh-100">
+
+		<div class="card booking-card shadow-lg border-0">
+
+			<!-- HEADER -->
+			<div class="text-center mb-4">
+				<div class="icon-badge">
+					<i class="fa-solid fa-car"></i>
+				</div>
+				<h2 class="fw-bold mt-3">Book Your Ride</h2>
+				<div th:if="${errorMsg}" class="alert alert-danger text-center">
+				    [[${errorMsg}]]
+				</div>
+				<p class="text-muted small">Luxury • Comfort • Instant Booking</p>
+			</div>
+
+			<!-- FORM -->
+			<form th:action="@{/user/booking}" method="post" th:object="${booking}">
+
+				<input type="hidden" th:field="*{carId}">
+
+				<!-- EMAIL -->
+				<div class="form-floating mb-3">
+					<input type="text" th:field="*{userEmail}" class="form-control" placeholder="Email" readonly>
+					<label>Email</label>
+				</div>
+
+				<!-- CAR -->
+				<div class="form-floating mb-3">
+					<input type="text" th:field="*{carName}" class="form-control" placeholder="Car" readonly>
+					<label>Car Name</label>
+				</div>
+
+				<!-- LOCATION -->
+				<div class="form-floating mb-3">
+					<input type="text" th:field="*{pickupLocation}" class="form-control" placeholder="Pickup Location"
+						required>
+					<label>📍 Pickup Location</label>
+				</div>
+
+				<!-- DATES -->
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-floating mb-3">
+							<input type="date" id="pickupDate" th:field="*{pickupDate}" class="form-control" required>
+							<label>Pickup Date</label>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-floating mb-3">
+							<input type="date" id="returnDate" th:field="*{returnDate}" class="form-control" required>
+							<label>Return Date</label>
+						</div>
+					</div>
+				</div>
+
+				<!-- SUMMARY -->
+				<div class="summary-box mb-3 p-3">
+					<p class="mb-1 small text-muted">Booking Summary</p>
+					<div class="d-flex justify-content-between">
+						<span>Car</span>
+						<strong th:text="*{carName}"></strong>
+					</div>
+					<div class="d-flex justify-content-between">
+						<span>User</span>
+						<strong th:text="*{userEmail}"></strong>
+					</div>
+				</div>
+
+				<!-- BUTTON -->
+				<button type="submit" class="btn-book">
+					🚀 Confirm Booking
+				</button>
+
+			</form>
+
+		</div>
+
+	</div>
+
+	<style>
+		.bg-hero {
+			position: fixed;
+			inset: 0;
+			background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+			z-index: -2;
+		}
+
+		.overlay {
+			position: fixed;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.6);
+			z-index: -1;
+		}
+
+		.booking-card {
+			width: 100%;
+			max-width: 520px;
+			/* increased width */
+			padding: 35px;
+			border-radius: 24px;
+			background: rgba(255, 255, 255, 0.97);
+			backdrop-filter: blur(12px);
+			animation: fadeIn 0.6s ease-in-out;
+		}
+
+		/* ICON */
+		.icon-badge {
+			font-size: 32px;
+			background: linear-gradient(135deg, #00c6ff, #0072ff);
+			color: white;
+			width: 65px;
+			height: 65px;
+			margin: auto;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		/* INPUT */
+		.form-control {
+			border-radius: 12px;
+		}
+
+		.form-control:focus {
+			box-shadow: 0 0 12px rgba(0, 123, 255, 0.4);
+			border-color: #007bff;
+		}
+
+		/* SUMMARY */
+		.summary-box {
+			border-radius: 12px;
+			background: #f8f9fa;
+		}
+
+		/* BUTTON */
+		.btn-book {
+			width: 100%;
+			padding: 13px;
+			border-radius: 14px;
+			border: none;
+			background: linear-gradient(135deg, #00c6ff, #0072ff);
+			color: white;
+			font-weight: 600;
+			transition: 0.3s;
+		}
+
+		.btn-book:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 10px 25px rgba(0, 114, 255, 0.4);
+		}
+
+		/* ANIMATION */
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+				transform: translateY(15px);
+			}
+
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+	</style>
+
+	<script>
+		const today = new Date().toISOString().split("T")[0];
+
+		const pickup = document.getElementById("pickupDate");
+		const returnDate = document.getElementById("returnDate");
+
+
+		pickup.setAttribute("min", today);
+		returnDate.setAttribute("min", today);
+
+		pickup.addEventListener("change", function () {
+			returnDate.value = "";
+			returnDate.setAttribute("min", this.value);
+		});
+	</script>
+
+</section>
+
+</html>

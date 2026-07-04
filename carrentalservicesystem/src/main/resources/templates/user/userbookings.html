@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base :: layout(~{::section})}">
+
+<section>
+
+<!-- HERO HEADER -->
+<div class="booking-hero text-center text-white d-flex align-items-center justify-content-center">
+    <div>
+        <h1 class="fw-bold">🚗 My Bookings</h1>
+        <p class="text-light">Track and manage all your bookings easily</p>
+    </div>
+</div>
+
+<div class="container mt-5">
+
+    <!-- SUCCESS MESSAGE -->
+    <div th:if="${msg}" class="alert alert-success text-center shadow-sm">
+        [[${msg}]]
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div th:if="${#lists.isEmpty(bookings)}" class="text-center p-5">
+        <h4 class="text-muted">No bookings found</h4>
+        <a href="/cars" class="btn btn-primary mt-3 px-4">
+            🚗 Browse Cars
+        </a>
+    </div>
+
+    <!-- BOOKING CARDS -->
+    <div class="row g-4">
+
+        <div class="col-md-6 col-lg-4" th:each="b : ${bookings}">
+
+            <div class="card booking-card h-100">
+
+                <div class="card-body">
+
+                    <!-- CAR NAME -->
+                    <h5 class="fw-bold text-dark mb-2">
+                        🚘 [[${b.carName}]]
+                    </h5>
+
+                    <!-- STATUS -->
+                    <span class="badge bg-success mb-3">
+                        Confirmed
+                    </span>
+
+                    <hr>
+
+                    <!-- DETAILS -->
+                    <div class="booking-info">
+                        <p><i class="fa-solid fa-calendar-check text-primary"></i>
+                            <strong>Pickup:</strong> [[${b.pickupDate}]]
+                        </p>
+
+                        <p><i class="fa-solid fa-calendar-xmark text-danger"></i>
+                            <strong>Return:</strong> [[${b.returnDate}]]
+                        </p>
+
+                        <p><i class="fa-solid fa-location-dot text-warning"></i>
+                            <strong>Location:</strong> [[${b.pickupLocation}]]
+                        </p>
+                    </div>
+
+                    <hr>
+
+                    <!-- BOOKING ID -->
+                    <p class="text-muted small mb-3">
+                        Booking ID: <strong>[[${b.id}]]</strong>
+                    </p>
+
+                    <!-- BUTTONS -->
+                    <div class="d-grid gap-2">
+
+                        <a th:href="@{/user/cancel-booking/{id}(id=${b.id})}"
+                           class="btn btn-outline-danger btn-sm"
+                           onclick="return confirm('Cancel this booking?');">
+                           ❌ Cancel Booking
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+/* HERO */
+.booking-hero {
+    height: 220px;
+    background: linear-gradient(135deg, #141e30, #243b55);
+    border-radius: 0 0 30px 30px;
+}
+
+/* CARD */
+.booking-card {
+    border-radius: 20px;
+    border: none;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    transition: 0.3s;
+}
+
+/* HOVER EFFECT */
+.booking-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+}
+
+/* DETAILS */
+.booking-info p {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+/* BUTTON */
+.btn:hover {
+    transform: scale(1.03);
+    transition: 0.3s;
+}
+
+</style>
+
+</section>
+
+</html>

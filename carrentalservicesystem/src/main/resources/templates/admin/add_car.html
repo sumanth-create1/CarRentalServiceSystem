@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base ::layout(~{::section})}">
+
+<head>
+    <title>Add Car</title>
+</head>
+
+<body>
+
+<section class="bg-light min-vh-100 py-5 p-5 mt-5">
+
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-md-8">
+
+                <div class="card border-0 shadow-lg rounded-4 addcar-card">
+
+                    <!-- HEADER -->
+                    <div class="card-header bg-primary text-white text-center rounded-top-4">
+                        <h4 class="fw-bold mb-0">
+                            <i class="fa-solid fa-car me-2"></i> Add New Car
+                        </h4>
+                    </div>
+
+                    <div class="card-body p-4">
+
+                        <!-- SUCCESS -->
+                        <div th:if="${successMsg}" class="alert alert-success text-center">
+                            [[${successMsg}]]
+                        </div>
+
+                        <!-- ERROR -->
+                        <div th:if="${errorMsg}" class="alert alert-danger text-center">
+                            [[${errorMsg}]]
+                        </div>
+
+                        <!-- FORM -->
+                        <form action="/admin/saveCar" method="post" enctype="multipart/form-data">
+
+                            <!-- NAME -->
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Car Name</label>
+                                <input type="text" name="title" class="form-control" placeholder="Enter car name" required>
+                            </div>
+
+                            <!-- DESCRIPTION -->
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Description</label>
+                                <textarea name="description" class="form-control" rows="3"
+                                          placeholder="Enter description" required></textarea>
+                            </div>
+
+                            <!-- CATEGORY + FUEL -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">Category</label>
+                                    <select name="category" class="form-select" required>
+                                        <option value="">-- Select --</option>
+                                        <option th:each="c:${categories}" th:value="${c.name}">
+                                            [[${c.name}]]
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">Fuel Type</label>
+                                    <select name="fuelType" class="form-select" required>
+                                        <option value="">-- Select --</option>
+                                        <option>Petrol</option>
+                                        <option>Diesel</option>
+                                        <option>Electric</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- PRICE + DISCOUNT -->
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label fw-semibold">Price (₹)</label>
+                                    <input type="number" name="price" class="form-control" required>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label fw-semibold">Discount (%)</label>
+                                    <input type="number" name="discount" class="form-control">
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label fw-semibold">Final Price</label>
+                                    <input type="text" id="discountPrice" class="form-control bg-light fw-bold" readonly>
+                                </div>
+                            </div>
+
+                            <!-- AVAILABILITY -->
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Availability</label>
+                                <select name="available" class="form-select">
+                                    <option value="yes">Available</option>
+                                    <option value="no">Not Available</option>
+                                </select>
+                            </div>
+
+                            <!-- IMAGE -->
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Upload Image</label>
+                                <input type="file" name="file" class="form-control" required>
+                            </div>
+
+                            <!-- BUTTON -->
+                            <button class="btn btn-primary w-100 py-2 fw-semibold rounded-3">
+                                <i class="fa-solid fa-plus me-1"></i> Add Car
+                            </button>
+
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+	
+
+
+	<!-- ✅ SCRIPT -->
+	<script>
+	    const priceInput = document.querySelector("input[name='price']");
+	    const discountInput = document.querySelector("input[name='discount']");
+	    const finalPriceInput = document.getElementById("discountPrice");
+
+	    function calculateDiscount() {
+	        let price = parseFloat(priceInput.value) || 0;
+	        let discount = parseFloat(discountInput.value) || 0;
+
+	        let discountAmount = (price * discount) / 100;
+	        let finalPrice = price - discountAmount;
+
+	        finalPriceInput.value = finalPrice.toFixed(2);
+	    }
+
+	    priceInput.addEventListener("input", calculateDiscount);
+	    discountInput.addEventListener("input", calculateDiscount);
+	</script>
+
+	<!-- 🎨 CUSTOM CSS -->
+	<style>
+	    body {
+	        background: linear-gradient(135deg, #eef2f3, #dfe9f3);
+	    }
+
+	    .addcar-card {
+	        transition: 0.3s ease;
+	    }
+
+	    .addcar-card:hover {
+	        transform: translateY(-5px);
+	    }
+
+	    .form-control, .form-select {
+	        border-radius: 10px;
+	        padding: 10px;
+	        transition: 0.3s;
+	    }
+
+	    .form-control:focus, .form-select:focus {
+	        border-color: #0d6efd;
+	        box-shadow: 0 0 5px rgba(13, 110, 253, 0.3);
+	    }
+
+	    button:hover {
+	        background-color: #0b5ed7;
+	    }
+	</style>
+
+</section>
+
+</body>
+</html>

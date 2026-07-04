@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base ::layout(~{::section})}">
+
+<head>
+    <title>Edit Car</title>
+</head>
+
+<body>
+
+<section>
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-lg rounded-4">
+
+                <!-- HEADER -->
+                <div class="card-header text-center bg-primary text-white fs-4 fw-bold">
+                    ✏️ Edit Car Details
+                </div>
+
+                <div class="card-body p-4">
+
+                    <!-- SUCCESS MESSAGE -->
+                    <div th:if="${successMsg}" class="alert alert-success text-center">
+                        [[${successMsg}]]
+                    </div>
+
+                    <!-- ERROR MESSAGE -->
+                    <div th:if="${errorMsg}" class="alert alert-danger text-center">
+                        [[${errorMsg}]]
+                    </div>
+
+                    <!-- FORM -->
+                    <form action="/admin/updateCar" method="post" enctype="multipart/form-data">
+
+                        <input type="hidden" name="id" th:value="${car.id}">
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Car Name</label>
+                            <input type="text" name="title" class="form-control"
+                                   th:value="${car.title}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Description</label>
+                            <textarea name="description" class="form-control" rows="3"
+                                      th:text="${car.description}"></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Category</label>
+                                <select name="category" class="form-control">
+                                    <option th:text="${car.category}" th:value="${car.category}"></option>
+                                    <option th:each="c : ${categories}"
+                                            th:value="${c.name}"
+                                            th:text="${c.name}">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Fuel Type</label>
+                                <select name="fuelType" class="form-control">
+                                    <option th:value="${car.fuelType}" th:text="${car.fuelType}"></option>
+                                    <option value="Petrol">Petrol</option>
+                                    <option value="Diesel">Diesel</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Price</label>
+                                <input type="number" name="price" class="form-control"
+                                       th:value="${car.price}">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Discount (%)</label>
+                                <input type="number" name="discount" class="form-control"
+                                       th:value="${car.discount}">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Availability</label>
+                            <input type="text" name="available" class="form-control"
+                                   th:value="${car.available}">
+                        </div>
+
+                        <!-- IMAGE UPLOAD -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Upload New Image</label>
+                            <input type="file" name="file" class="form-control">
+                        </div>
+
+                        <!-- CURRENT IMAGE -->
+                        <div class="text-center mb-4">
+                            <label class="form-label fw-semibold">Current Image</label><br>
+                            <img th:src="@{'/images/cars/' + ${car.imageName}}"
+                                 class="rounded-4 shadow mt-2"
+                                 style="height:160px;width:160px;object-fit:cover;">
+                        </div>
+
+                        <!-- SUBMIT -->
+                        <button class="btn btn-primary w-100 py-2 fw-semibold">
+                            Update Car Details
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</section>
+
+</body>
+</html>

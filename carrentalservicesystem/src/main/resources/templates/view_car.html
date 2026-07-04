@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base ::layout(~{::section})}">
+
+<head>
+	<title>base</title>
+
+</head>
+
+
+</style>
+
+<body>
+	<section class="mt-5 pt-5 bg-light min-vh-100">
+		<div class="container">
+
+			<div class="card border-0 shadow-lg rounded-5 overflow-hidden car-card">
+
+				<div class="row g-0">
+
+					<!-- IMAGE SIDE -->
+					<div class="col-md-6 bg-dark d-flex align-items-center justify-content-center p-3">
+						<img th:src="@{'/images/cars/' + ${car.imageName}}" class="img-fluid rounded-4 car-img">
+					</div>
+
+					<!-- DETAILS SIDE -->
+					<div class="col-md-6 p-4">
+
+						<h2 class="fw-bold text-dark">[[${car.title}]]</h2>
+
+						<div class="mb-3">
+							<span class="badge bg-secondary">[[${car.category}]]</span>
+							<span class="badge bg-info text-dark">[[${car.fuelType}]]</span>
+
+							<span th:if="${car.available}" class="badge bg-success p-2">
+							    Available
+							</span>
+
+							<span th:if="${!car.available}" class="badge bg-danger p-2">
+							    Not Available
+							</span>
+						</div>
+
+						<p class="text-muted">[[${car.description}]]</p>
+
+						<hr>
+
+						<div class="row small text-secondary">
+							<div class="col-6">
+								<p><strong>Fuel:</strong> [[${car.fuelType}]]</p>
+								<p><strong>Category:</strong> [[${car.category}]]</p>
+							</div>
+							<div class="col-6">
+								<p><strong>Discount:</strong> [[${car.discount}]]%</p>
+								<p><strong>Status:</strong> [[${car.available}]]</p>
+							</div>
+						</div>
+
+						<!-- PRICE CARD -->
+						<div class="price-box p-3 rounded-4 my-3 shadow-sm">
+
+							<div class="text-muted text-decoration-line-through">
+								₹ [[${car.price}]]
+							</div>
+
+							<div class="fs-3 fw-bold text-success">
+								₹ [[${car.discountPrice}]]
+							</div>
+
+							<div class="text-primary fw-semibold">
+								₹ [[${car.discountPrice}]] / Day
+							</div>
+						</div>
+
+						<!-- BUTTON -->
+						<a th:href="@{/user/booking-page/{carId}(carId=${car.id})}"
+						   class="btn btn-primary w-100 py-2 rounded-4 fw-semibold">
+						   Book Now
+						</a>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<style>
+			body {
+				background: linear-gradient(135deg, #eef2f3, #dfe9f3);
+			}
+
+			.car-card {
+				transition: 0.3s ease;
+			}
+
+			.car-card:hover {
+				transform: translateY(-6px);
+			}
+
+			.car-img {
+				max-height: 400px;
+				object-fit: cover;
+				transition: 0.4s ease;
+			}
+
+			.car-img:hover {
+				transform: scale(1.05);
+			}
+
+			.price-box {
+				background: linear-gradient(135deg, #f8f9fa, #ffffff);
+				border-left: 6px solid #28a745;
+			}
+		</style>
+	</section>
+
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: layout(~{::section})}">
+
+<head>
+	<title>Register - Car Rental</title>
+</head>
+
+<body>
+
+	<section class="container py-5">
+
+		<div class="card register-card p-4 bg-white">
+
+			<h3 class="text-center mb-4 title">
+				Create Your Account 🚗
+			</h3>
+
+			<!-- Success Message -->
+			<th:block th:if="${successMsg}">
+				<p class="alert alert-success text-center">
+					[[${successMsg}]]
+				</p>
+			</th:block>
+
+			<!-- Error Message -->
+			<th:block th:if="${errorMsg}">
+				<p class="alert alert-danger text-center">
+					[[${errorMsg}]]
+				</p>
+			</th:block>
+
+			<!-- Form -->
+			<form action="/saveUser" method="post" enctype="multipart/form-data">
+
+				<!-- Name -->
+				<div class="mb-3">
+					<input type="text" class="form-control" name="fullname" placeholder="Full Name" required>
+				</div>
+
+				<!-- Email -->
+				<div class="mb-3">
+					<input type="email" class="form-control" name="email" placeholder="Email Address" required>
+				</div>
+
+				<!-- Password -->
+				<div class="mb-3">
+					<input type="password" class="form-control" name="password" placeholder="Password" required>
+				</div>
+
+				<!-- Confirm Password -->
+				<div class="mb-3">
+					<input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password"
+						required>
+				</div>
+
+				<!-- Address Row -->
+				<div class="row">
+					<div class="col-md-6 mb-3">
+						<input type="text" class="form-control" name="city" placeholder="City">
+					</div>
+					<div class="col-md-3 mb-3">
+						<input type="text" class="form-control" name="state" placeholder="State">
+					</div>
+					<div class="col-md-3 mb-3">
+						<input type="text" class="form-control" name="zipcode" placeholder="Zipcode">
+					</div>
+				</div>
+
+				<!-- Phone -->
+				<div class="mb-3">
+					<input type="tel" class="form-control" name="mobilenumber" placeholder="Phone Number" required>
+				</div>
+
+				<!-- Profile Image -->
+				<div class="mb-3">
+					<input class="form-control" name="img" type="file">
+				</div>
+
+				<!-- Button -->
+				<div class="d-grid">
+					<button type="submit" class="btn btn-primary">
+						Register
+					</button>
+				</div>
+
+				<!-- Login -->
+				<p class="text-center mt-3 mb-0">
+					Already have an account?
+					<a href="/signin" class="text-decoration-none fw-bold">
+						Login
+					</a>
+				</p>
+
+			</form>
+
+		</div>
+
+		<style>
+			body {
+				background: linear-gradient(135deg, #4e54c8, #8f94fb);
+			}
+
+			.register-card {
+				max-width: 650px;
+				margin: auto;
+				border-radius: 18px;
+				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+				animation: fadeIn 0.6s ease-in-out;
+			}
+
+			@keyframes fadeIn {
+				from {
+					opacity: 0;
+					transform: translateY(20px);
+				}
+
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			.form-control {
+				border-radius: 10px;
+				padding: 10px;
+			}
+
+			.btn-primary {
+				border-radius: 10px;
+				padding: 10px;
+				font-weight: 600;
+				background: #4e54c8;
+				border: none;
+			}
+
+			.btn-primary:hover {
+				background: #3b40a4;
+			}
+
+			.title {
+				font-weight: 700;
+				color: #4e54c8;
+			}
+		</style>
+	</section>
+
+</body>
+
+</html>

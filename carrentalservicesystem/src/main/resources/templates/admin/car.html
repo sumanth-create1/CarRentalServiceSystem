@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base ::layout(~{::section})}">
+
+<head>
+    <title>View Cars</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+
+<body>
+
+<section>
+
+    <div class="container-fluid">
+
+        <!-- Header -->
+        <div class="card shadow-lg border-0 rounded-4 mb-4 p-4 text-center">
+            <h2 class="fw-bold text-primary">
+                <i class="fa-solid fa-car me-2"></i> Manage Cars
+            </h2>
+            <p class="text-muted">View, edit and manage all cars</p>
+
+            <th:block th:if="${SuccessMsg}">
+                <div class="alert alert-success">[[${SuccessMsg}]]</div>
+            </th:block>
+
+            <th:block th:if="${ErrorMsg}">
+                <div class="alert alert-danger">[[${ErrorMsg}]]</div>
+            </th:block>
+        </div>
+
+        <!-- 🔥 Carousel (Top Featured Cars) -->
+        <div id="carCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+            <div class="carousel-inner">
+
+                <div class="carousel-item active" th:each="p, i : ${cars}" th:if="${i.index < 3}">
+                    <img th:src="@{'/images/cars/' + ${p.imageName}}"
+                         class="d-block w-100 rounded-4 carousel-img">
+                    <div class="carousel-caption bg-dark bg-opacity-50 rounded p-2">
+                        <h5>[[${p.title}]]</h5>
+                        <p>₹ [[${p.discountPrice}]] / Day</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#carCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+
+
+        <!-- Table -->
+        <div class="card shadow-lg border-0 rounded-4 p-3">
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle text-center">
+
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Car</th>
+                            <th>Image</th>
+                            <th>Fuel</th>
+                            <th>Price</th>
+                            <th>Discount</th>
+                            <th>Final Price</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="p, c : ${cars}">
+                            <td>[[${c.count}]]</td>
+
+                            <td class="fw-semibold text-primary">
+                                [[${p.title}]]
+                            </td>
+
+                            <td>
+                                <img th:src="@{'/images/cars/' + ${p.imageName}}"
+                                     class="car-img">
+                            </td>
+
+                            <td>
+                                <span class="badge bg-info text-dark">
+                                    [[${p.fuelType}]]
+                                </span>
+                            </td>
+
+                            <td>₹ [[${p.price}]]</td>
+
+                            <td>
+                                <span class="badge bg-warning text-dark">
+                                    [[${p.discount}]]%
+                                </span>
+                            </td>
+
+                            <td class="fw-bold text-success">
+                                ₹ [[${p.discountPrice}]]
+                            </td>
+
+                            <td class="text-muted small">
+                                [[${p.description}]]
+                            </td>
+
+                            <td>
+                                <a th:href="@{'/admin/editCar/' + ${p.id}}"
+                                   class="btn btn-sm btn-outline-primary me-1">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+
+                                <a th:href="@{'/admin/deleteCar/' + ${p.id}}"
+                                   class="btn btn-sm btn-outline-danger">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+	
+	<!-- CSS -->
+	<style>
+	body {
+	    background: linear-gradient(135deg, #eef2f3, #dfe9f3);
+	}
+
+	/* Carousel */
+	.carousel-img {
+	    height: 300px;
+	    object-fit: cover;
+	}
+
+	/* Table Image */
+	.car-img {
+	    width: 90px;
+	    height: 70px;
+	    border-radius: 10px;
+	    object-fit: cover;
+	    transition: 0.3s;
+	}
+
+	.car-img:hover {
+	    transform: scale(1.2);
+	}
+
+	/* Table */
+	table tbody tr:hover {
+	    background-color: #f8f9fa;
+	}
+
+	/* Card */
+	.card {
+	    transition: 0.3s;
+	}
+
+	.card:hover {
+	    transform: translateY(-3px);
+	}
+	
+	.carousel-img {
+	    height: 500px;
+	    object-fit: cover;
+	    filter: brightness(75%); /* darkens image for better text visibility */
+	}
+
+	.carousel-caption {
+	    bottom: 30%;
+	}
+
+	.carousel-caption h5 {
+	    font-size: 28px;
+	    font-weight: bold;
+	}
+
+	.carousel-caption p {
+	    font-size: 18px;
+	}
+	</style>
+
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</section>
+
+
+
+</body>
+</html>

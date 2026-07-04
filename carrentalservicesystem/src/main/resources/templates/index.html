@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base ::layout(~{::section})}">
+
+<head>
+    <title>Home</title>
+</head>
+
+<body>
+
+<section>
+
+	<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+
+	    <div class="carousel-inner">
+
+	        <!-- SLIDE 1 -->
+	        <div class="carousel-item active">
+	            <div class="position-relative">
+
+	                <img src="images/cara1.png" class="d-block w-100 carousel-img">
+
+	                <!-- DARK GRADIENT OVERLAY -->
+	                <div class="carousel-overlay"></div>
+
+	                <!-- TEXT -->
+	                <div class="carousel-caption text-start">
+	                    <h1 class="fw-bold">Drive Your Dream Car</h1>
+	                    <p class="lead">"Luxury is not a choice, it's an experience."</p>
+	                    <a href="/cars" class="btn btn-primary px-4 me-2">Explore Cars</a>
+	                    <a href="/booking" class="btn btn-outline-light px-4">Book Now</a>
+	                </div>
+
+	            </div>
+	        </div>
+
+	        <!-- SLIDE 2 -->
+	        <div class="carousel-item">
+	            <div class="position-relative">
+
+	                <img src="images/cara2.png" class="d-block w-100 carousel-img">
+
+	                <div class="carousel-overlay"></div>
+
+	                <div class="carousel-caption text-start">
+	                    <h1 class="fw-bold">Affordable & Reliable</h1>
+	                    <p class="lead">"Best rides at the best prices."</p>
+	                    <a href="/cars" class="btn btn-success px-4 me-2">View Cars</a>
+	                </div>
+
+	            </div>
+	        </div>
+
+	        <!-- SLIDE 3 -->
+	        <div class="carousel-item">
+	            <div class="position-relative">
+
+	                <img src="images/cara3.png" class="d-block w-100 carousel-img">
+
+	                <div class="carousel-overlay"></div>
+
+	                <div class="carousel-caption text-start">
+	                    <h1 class="fw-bold">Travel Without Limits</h1>
+	                    <p class="lead">"Your journey, your rules."</p>
+	                    <a href="/booking" class="btn btn-warning px-4">Start Booking</a>
+	                </div>
+
+	            </div>
+	        </div>
+
+	        <!-- SLIDE 4 -->
+	        <div class="carousel-item">
+	            <div class="position-relative">
+
+	                <img src="images/cara4.png" class="d-block w-100 carousel-img">
+
+	                <div class="carousel-overlay"></div>
+
+	                <div class="carousel-caption text-start">
+	                    <h1 class="fw-bold">Comfort Meets Style</h1>
+	                    <p class="lead">"Ride in elegance and confidence."</p>
+	                    <a href="/cars" class="btn btn-danger px-4">Discover More</a>
+	                </div>
+
+	            </div>
+	        </div>
+
+	    </div>
+
+	    <!-- CONTROLS -->
+	    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+	        <span class="carousel-control-prev-icon"></span>
+	    </button>
+
+	    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+	        <span class="carousel-control-next-icon"></span>
+	    </button>
+
+	</div>
+
+
+    <!-- ⭐ CATEGORIES -->
+    <div class="container mt-5">
+        <h2 class="text-center section-title">Top Categories</h2>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="card category-card">
+                    <img th:src="@{/images/223161-P1KQ2O-996.png}" class="card-img-top">
+                    <div class="card-body text-center">
+                        <h5>Delivery</h5>
+                        <p>Fast and reliable delivery cars</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card category-card">
+                    <img th:src="@{/images/12394.png}" class="card-img-top">
+                    <div class="card-body text-center">
+                        <h5>Top Rated</h5>
+                        <p>Most loved cars by users</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card category-card">
+                    <img th:src="@{/images/O9IY140.png}" class="card-img-top">
+                    <div class="card-body text-center">
+                        <h5>Budget</h5>
+                        <p>Affordable for everyone</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- 🚗 FEATURED CARS -->
+    <div class="container mt-5">
+        <h2 class="text-center section-title">Featured Cars</h2>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="card car-card">
+                    <img src="/images/AudiA6.png" class="card-img-top">
+                    <div class="card-body text-center">
+                        <h5>Audi A6</h5>
+                        <p class="text-primary fw-bold">₹3000/day</p>
+                        <a href="/booking" class="btn btn-outline-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card car-card">
+                    <img src="/images/BMWX5.png" class="card-img-top">
+                    <div class="card-body text-center">
+                        <h5>BMW X5</h5>
+                        <p class="text-primary fw-bold">₹3000/day</p>
+                        <a href="/booking" class="btn btn-outline-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card car-card">
+                    <img src="/images/tatapunch.png" class="card-img-top">
+                    <div class="card-body text-center">
+                        <h5>Tata Punch</h5>
+                        <p class="text-primary fw-bold">₹3000/day</p>
+                        <a href="/booking" class="btn btn-outline-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ⭐ WHY CHOOSE US -->
+    <div class="container mt-5 text-center">
+        <h2 class="section-title">Why Choose Us?</h2>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <i class="fa-solid fa-car fa-3x text-primary"></i>
+                <h5 class="mt-3">Wide Range</h5>
+                <p>Luxury to budget cars available</p>
+            </div>
+
+            <div class="col-md-4">
+                <i class="fa-solid fa-wallet fa-3x text-success"></i>
+                <h5 class="mt-3">Best Prices</h5>
+                <p>No hidden charges</p>
+            </div>
+
+            <div class="col-md-4">
+                <i class="fa-solid fa-headset fa-3x text-danger"></i>
+                <h5 class="mt-3">24/7 Support</h5>
+                <p>Always ready to help</p>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- 💬 TESTIMONIALS -->
+    <div class="container mt-5">
+        <h2 class="text-center section-title">What Customers Say</h2>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="card p-3 testimonial shadow-sm">
+                    <p>"Amazing service!"</p>
+                    <h6 class="text-end">- Rahul</h6>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card p-3 testimonial shadow-sm">
+                    <p>"Affordable and smooth experience."</p>
+                    <h6 class="text-end">- Priya</h6>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card p-3 testimonial shadow-sm">
+                    <p>"Highly recommended!"</p>
+                    <h6 class="text-end">- Arjun</h6>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- 🚀 CTA -->
+    <div class="container mt-5">
+        <div class="cta-section text-center text-white p-5">
+            <h2>Ready to Ride?</h2>
+            <p>Book your car now and enjoy your journey</p>
+            <a href="/booking" class="btn btn-light px-4">Book Now</a>
+        </div>
+    </div>
+	
+	<style>
+
+	        /* HERO CAROUSEL */
+	        .carousel-item img {
+	            height: 80vh;
+	            object-fit: cover;
+	            filter: brightness(60%);
+	        }
+
+	        .carousel-caption {
+	            bottom: 30%;
+	        }
+
+	        .carousel-caption h1 {
+	            font-size: 3rem;
+	            font-weight: bold;
+	        }
+
+	        /* CATEGORY CARDS */
+	        .category-card {
+	            transition: 0.3s;
+	            border-radius: 15px;
+	            overflow: hidden;
+	        }
+
+	        .category-card:hover {
+	            transform: translateY(-8px);
+	            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+	        }
+
+	        /* FEATURED CAR */
+	        .car-card {
+	            border-radius: 15px;
+	            overflow: hidden;
+	            transition: 0.3s;
+	        }
+
+	        .car-card:hover {
+	            transform: scale(1.05);
+	            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+	        }
+
+	        /* SECTION TITLE */
+	        .section-title {
+	            font-weight: bold;
+	            font-size: 2.2rem;
+	            margin-bottom: 30px;
+	        }
+
+	        /* TESTIMONIAL */
+	        .testimonial {
+	            border-radius: 15px;
+	            transition: 0.3s;
+	        }
+
+	        .testimonial:hover {
+	            transform: translateY(-5px);
+	        }
+
+	        /* CTA */
+	        .cta-section {
+	            background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+	            border-radius: 20px;
+	        }
+			
+			.carousel-img {
+			    height: 85vh;
+			    object-fit: cover;
+			}
+
+			/* DARK GRADIENT OVERLAY */
+			.carousel-overlay {
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    width: 100%;
+			    height: 100%;
+
+			    background: linear-gradient(
+			        135deg,
+			        rgba(0,0,0,0.7),
+			        rgba(0,0,0,0.4),
+			        rgba(0,0,0,0.7)
+			    );
+			}
+
+			/* TEXT POSITION */
+			.carousel-caption {
+			    bottom: 30%;
+			    z-index: 2;
+			}
+
+			/* TEXT STYLE */
+			.carousel-caption h1 {
+			    font-size: 3rem;
+			    animation: fadeInUp 1s ease;
+			}
+
+			.carousel-caption p {
+			    font-size: 1.2rem;
+			    margin-bottom: 20px;
+			}
+
+			/* ANIMATION */
+			@keyframes fadeInUp {
+			    from {
+			        opacity: 0;
+			        transform: translateY(30px);
+			    }
+			    to {
+			        opacity: 1;
+			        transform: translateY(0);
+			    }
+			}
+
+	    </style>
+
+</section>
+
+</body>
+</html>
